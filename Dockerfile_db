@@ -1,0 +1,9 @@
+FROM postgres:15
+
+ENV POSTGRES_USER=myuser
+ENV POSTGRES_PASSWORD=mysecretpassword
+ENV POSTGRES_DB=public_transport_db
+
+VOLUME ["/var/lib/postgresql/data"]
+
+EXPOSE 5432
