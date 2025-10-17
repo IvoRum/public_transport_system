@@ -3,21 +3,28 @@ package com.example.publictransportsystem.persitence;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "vehicles")
-public class VehiclesEntity {
+@Table(name = "vehicle")
+public class VehicleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
+
+    @Column(name = "passenger_capacity", nullable = false)
+    private int passengerCapacity;
 
     @Column(name = "name", nullable = false)
     private String name;
 
-    public Long getId() {
+//    @Column
+//    @OneToMany
+//    private VehicleTypeEntity type;
+
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

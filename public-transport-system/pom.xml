@@ -34,17 +34,18 @@
       <version>3.2.2</version>
       <scope>provided</scope>
     </dependency><dependency>
-      <groupId>javax.persistence</groupId>
-      <artifactId>javax.persistence-api</artifactId>
-      <version>2.2</version>
-      <scope>provided</scope>
-    </dependency><dependency>
       <groupId>javax.ws.rs</groupId>
       <artifactId>javax.ws.rs-api</artifactId>
       <version>2.1.1</version>
       <scope>provided</scope>
     </dependency>
 
+      <dependency>
+          <groupId>javax.persistence</groupId>
+          <artifactId>javax.persistence-api</artifactId>
+          <version>2.2</version>
+          <scope>provided</scope>
+      </dependency>
       <dependency>
           <groupId>org.hibernate</groupId>
           <artifactId>hibernate-core</artifactId>
@@ -62,11 +63,22 @@
           <version>42.7.8</version>
       </dependency>
 
-<dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
-      <version>${junit.version}</version>
-      <scope>test</scope>
+      <dependency>
+          <groupId>org.eclipse.microprofile.openapi</groupId>
+          <artifactId>microprofile-openapi-api</artifactId>
+          <version>2.0.1</version>
+      </dependency>
+      <dependency>
+          <groupId>io.smallrye</groupId>
+          <artifactId>smallrye-open-api-core</artifactId>
+          <version>3.2.0</version>
+      </dependency>
+
+    <dependency>
+          <groupId>org.junit.jupiter</groupId>
+          <artifactId>junit-jupiter-api</artifactId>
+          <version>${junit.version}</version>
+          <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>

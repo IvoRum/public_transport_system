@@ -1,6 +1,6 @@
 package com.example.publictransportsystem.service;
 
-import com.example.publictransportsystem.persitence.VehiclesEntity;
+import com.example.publictransportsystem.persitence.VehicleEntity;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -13,7 +13,7 @@ public class VehicleService {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public List<VehiclesEntity> getAllVehicles() {
-        return entityManager.createQuery("SELECT v FROM VehiclesEntity v", VehiclesEntity.class).getResultList();
+    public List<VehicleEntity> getAllVehicles() {
+        return entityManager.createQuery("SELECT v FROM VehiclesEntity v", VehicleEntity.class).getResultList();
     }
 }

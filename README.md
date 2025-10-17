@@ -2,6 +2,18 @@
 
 A lightweight backend system for managing ticketing in a public transport compan
 
+# OpenAPI link
+
+http://localhost:8080/public-transport-system-1.0-SNAPSHOT/openapi
+
+http://localhost:8080/public-transport-system-1.0-SNAPSHOT/api/openapi
+
+http://localhost:8080/your-app/openapi
+
+final
+
+http://localhost:8080/public-transport-system-1.0-SNAPSHOT/openapi
+
 # Dev notes
 
 ## Run WildFlt 18
@@ -71,3 +83,37 @@ Here is the url to the Docker repository:
 https://hub.docker.com/repository/docker/ivorum/wildfly-public-transport/general
 
 ## Posgre set up
+
+For tesp perposes I first run a clean container of posgres and then. after I see that wildfly is connecting properly to the db I`l create a new dicker file and after that I'l create a docker compose file.
+
+```
+docker build -f Dockerfile_db -t public_transport_db:latest .
+```
+
+```
+docker run -d --name public_transport_db -p 5432:5432 -v pgdata:/var/lib/postgresql/data public_transport_db:latest
+```
+
+# Persisntace configs
+
+```xml
+
+  <?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
+  <persistence-unit name="default" transaction-type="JTA">
+    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+    <!--<jta-data-source>java:/jdbc/PublicTransportDS</jta-data-source>-->
+    <properties>
+      <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://postgres-db:5432/public_transport_db"/>
+      <property name="javax.persistence.jdbc.user" value="myuser"/>
+      <property name="javax.persistence.jdbc.password" value="mysecretpassword"/>
+
+      <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect"/>
+      <property name="hibernate.hbm2ddl.auto" value="update"/>
+      <property name="hibernate.show_sql" value="true"/>
+      <property name="hibernate.format_sql" value="true"/>
+    </properties>
+  </persistence-unit>
+
+```
