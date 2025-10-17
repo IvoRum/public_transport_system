@@ -21,6 +21,6 @@ public class DataInitializer {
         VehicleEntity vehicle1 = new VehicleEntity();
         vehicle1.setName("Bus A");
 
-        entityManager.persist(vehicle1);
+        //entityManager.persist(vehicle1);
     }
 }

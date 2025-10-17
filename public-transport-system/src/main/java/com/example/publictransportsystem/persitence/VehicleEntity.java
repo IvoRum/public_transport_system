@@ -5,7 +5,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "vehicle")
 public class VehicleEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -13,18 +12,18 @@ public class VehicleEntity {
     @Column(name = "passenger_capacity", nullable = false)
     private int passengerCapacity;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, length = 100)
     private String name;
 
-//    @Column
-//    @OneToMany
-//    private VehicleTypeEntity type;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "type_id", referencedColumnName = "id")
+    private VehicleTypeEntity type;
 
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(final long id) {
         this.id = id;
     }
 
@@ -32,7 +31,23 @@ public class VehicleEntity {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
+    }
+
+    public int getPassengerCapacity() {
+        return passengerCapacity;
+    }
+
+    public void setPassengerCapacity(final int passengerCapacity) {
+        this.passengerCapacity = passengerCapacity;
+    }
+
+    public VehicleTypeEntity getType() {
+        return type;
+    }
+
+    public void setType(final VehicleTypeEntity type) {
+        this.type = type;
     }
 }
