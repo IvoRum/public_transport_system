@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="Wieldfly">
+    <output-path>$PROJECT_DIR$/out/artifacts/Wieldfly</output-path>
+    <root id="root">
+      <element id="dir-copy" path="C:/wildfly-18.0.1.Final/wildfly-18.0.1.Final" />
+    </root>
+  </artifact>
+</component>
