@@ -7,6 +7,10 @@ RUN mkdir -p modules/org/postgresql/main
 COPY drivers/postgresql-42.7.8.jar modules/org/postgresql/main/
 COPY drivers/module.xml modules/org/postgresql/main/
 
+# Create folder for OpenAPI module
+#RUN mkdir -p modules/org/eclipse/microprofile/openapi/main
+#COPY drivers/openapi-module.xml modules/org/eclipse/microprofile/openapi/main/
+
 # Copy the war file
 WORKDIR /opt/jboss/wildfly/standalone/deployments/
 COPY target/public-transport-system-1.0-SNAPSHOT.war ./

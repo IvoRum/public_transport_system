@@ -10,9 +10,15 @@ http://localhost:8080/public-transport-system-1.0-SNAPSHOT/api/openapi
 
 http://localhost:8080/your-app/openapi
 
+http://localhost:8080/openapi
+
+http://localhost:8080/swagger
+
 final
 
 http://localhost:8080/public-transport-system-1.0-SNAPSHOT/openapi
+
+http://localhost:8080/public-transport-system-1.0-SNAPSHOT/openapi/ui
 
 # Dev notes
 
@@ -96,6 +102,8 @@ docker run -d --name public_transport_db -p 5432:5432 -v pgdata:/var/lib/postgre
 
 # Persisntace configs
 
+Това е за да се интециализа схема с която апликацията ти ще се свърже към дб, и по-конкретно посгрес.
+
 ```xml
 
   <?xml version="1.0" encoding="UTF-8"?>
@@ -116,4 +124,16 @@ docker run -d --name public_transport_db -p 5432:5432 -v pgdata:/var/lib/postgre
     </properties>
   </persistence-unit>
 
+```
+
+jboss-deployment-structure.xml
+
+```xml
+<jboss-deployment-structure>
+    <deployment>
+        <dependencies>
+            <module name="org.eclipse.microprofile.openapi"/>
+        </dependencies>
+    </deployment>
+</jboss-deployment-structure>
 ```
