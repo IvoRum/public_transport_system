@@ -5,6 +5,7 @@ import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -17,7 +18,8 @@ import java.util.List;
 @Tag(name = "Vehicles", description = "Operations related to vehicles")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class VihicleController {
+@ApplicationScoped
+public class VehicleController {
 
     @Inject
     private VehicleService vehicleService;

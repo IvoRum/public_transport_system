@@ -10,7 +10,7 @@ import javax.persistence.PersistenceContext;
 
 @Singleton
 @Startup
-public class DataInitializer {
+public final class DataInitializer {
 
     @PersistenceContext
     private EntityManager entityManager;

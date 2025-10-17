@@ -1,19 +1,20 @@
 package com.example.publictransportsystem.service;
 
 import com.example.publictransportsystem.persitence.VehicleEntity;
+import com.example.publictransportsystem.repository.VehicleRepository;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import java.util.List;
 
 @Stateless
 public class VehicleService {
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    @Inject
+    private VehicleRepository vehicleRepository;
 
     public List<VehicleEntity> getAllVehicles() {
-        return entityManager.createQuery("SELECT v FROM VehicleEntity v", VehicleEntity.class).getResultList();
+        return vehicleRepository.findAllVehicles();
     }
 }
