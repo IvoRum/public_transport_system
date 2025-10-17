@@ -14,6 +14,6 @@ public class VehicleService {
     private EntityManager entityManager;
 
     public List<VehicleEntity> getAllVehicles() {
-        return entityManager.createQuery("SELECT v FROM VehiclesEntity v", VehicleEntity.class).getResultList();
+        return entityManager.createQuery("SELECT v FROM VehicleEntity v", VehicleEntity.class).getResultList();
     }
 }
