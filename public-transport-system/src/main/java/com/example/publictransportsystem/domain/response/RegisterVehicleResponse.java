@@ -2,7 +2,6 @@ package com.example.publictransportsystem.domain.response;
 
 import com.example.publictransportsystem.domain.dto.VehicleDTO;
 import com.example.publictransportsystem.domain.status.VehicleRequestStatus;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 public final class RegisterVehicleResponse extends BaseResponse {
     private final VehicleDTO vehicleDTO;

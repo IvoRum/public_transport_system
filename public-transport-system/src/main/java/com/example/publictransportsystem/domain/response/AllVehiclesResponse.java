@@ -2,7 +2,6 @@ package com.example.publictransportsystem.domain.response;
 
 import com.example.publictransportsystem.domain.dto.VehicleDTO;
 import com.example.publictransportsystem.domain.status.VehicleRequestStatus;
-import jdk.nashorn.internal.ir.annotations.Immutable;
 
 import java.util.List;
 
