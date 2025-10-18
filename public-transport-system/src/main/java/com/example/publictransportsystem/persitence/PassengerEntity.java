@@ -1,14 +1,12 @@
 package com.example.publictransportsystem.persitence;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "passenger")
-public class Passenger {
+public class PassengerEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(nullable = false)
     private String name;

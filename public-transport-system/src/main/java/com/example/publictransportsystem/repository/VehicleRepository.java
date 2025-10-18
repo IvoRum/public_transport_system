@@ -5,6 +5,7 @@ import com.example.publictransportsystem.persitence.VehicleEntity;
 import com.example.publictransportsystem.persitence.VehicleTypeEntity;
 
 import javax.enterprise.context.Dependent;
+import javax.persistence.NoResultException;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,6 +53,24 @@ public final class VehicleRepository extends BaseRepositoryJPA{
             entityManager.persist(vehicleEntity);
             return Optional.of(vehicleEntity);
         } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * Find vehicle by its registration number.
+     *
+     * @param vehicleNumber The registration number of the vehicle. Must not be null.
+     * @return Optional containing the VehicleEntity if found, or Optional.empty() if not found.
+     */
+    public Optional<VehicleEntity> findVehicle(final String vehicleNumber){
+        assert vehicleNumber != null : "Vehicle number must not be null";
+
+        try {
+            return Optional.of(entityManager.createQuery(
+                            "SELECT v FROM VehicleEntity v WHERE v.registrationNumber = :regNum", VehicleEntity.class)
+                    .setParameter("regNum", vehicleNumber).getSingleResult());
+        }catch (NoResultException e){
             return Optional.empty();
         }
     }

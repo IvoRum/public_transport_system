@@ -1,5 +1,7 @@
 package com.example.publictransportsystem.persitence;
 
+import com.example.publictransportsystem.domain.dto.TicketDTO;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.UUID;
@@ -22,11 +24,11 @@ public class TicketEntity {
     @Column(name= "ts_created", nullable = false)
     private Timestamp createdOn;
 
-    @Column(name= "ts_validated", nullable = false)
+    @Column(name= "ts_validated")
     private Timestamp validatedOn;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private Passenger passenger;
+    private PassengerEntity passengerEntity;
 
     @Column
     private boolean validated;
@@ -64,9 +66,9 @@ public class TicketEntity {
 
     public String getCode() {return code;}
 
-    public Passenger getPassenger() {return passenger;}
+    public PassengerEntity getPassenger() {return passengerEntity;}
 
-    public void setPassenger(Passenger passenger) {this.passenger = passenger;}
+    public void setPassenger(PassengerEntity passengerEntity) {this.passengerEntity = passengerEntity;}
 
     public Timestamp getCreatedOn() {return createdOn;}
 
@@ -75,4 +77,15 @@ public class TicketEntity {
     public Timestamp getValidatedOn() {return validatedOn;}
 
     public void setValidatedOn(Timestamp validatedOn) {this.validatedOn = validatedOn;}
+
+    public TicketDTO toDTO() {
+        return new TicketDTO(
+                vehicle.toDTO(),
+                code,
+                createdOn,
+                validatedOn,
+                passengerEntity,
+                validated
+        );
+    }
 }

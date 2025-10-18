@@ -1,5 +1,6 @@
 package com.example.publictransportsystem.intit;
 
+import com.example.publictransportsystem.persitence.PassengerEntity;
 import com.example.publictransportsystem.persitence.VehicleEntity;
 import com.example.publictransportsystem.persitence.VehicleTypeEntity;
 import com.example.publictransportsystem.repository.VehicleRepository;
@@ -20,7 +21,6 @@ public class DataInitializer {
     @PersistenceContext
     private EntityManager entityManager;
 
-
     @PostConstruct
     public void initData() {
         final VehicleTypeEntity vType = new VehicleTypeEntity();
@@ -33,5 +33,9 @@ public class DataInitializer {
         vehicle1.setPassengerCapacity(40);
 
         entityManager.persist(vehicle1);
+
+        PassengerEntity passenger = new PassengerEntity();
+        passenger.setName("Ivan");
+        entityManager.persist(passenger);
     }
 }
