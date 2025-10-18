@@ -3,12 +3,11 @@ package com.example.publictransportsystem.service;
 import com.example.publictransportsystem.persitence.VehicleEntity;
 import com.example.publictransportsystem.repository.VehicleRepository;
 
-import javax.ejb.Stateless;
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import java.util.List;
 
-@Stateless
+@RequestScoped
 public class VehicleService {
 
     @Inject
