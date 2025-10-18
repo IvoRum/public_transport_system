@@ -2,6 +2,7 @@ package com.example.publictransportsystem.domain.dto;
 
 import com.example.publictransportsystem.persitence.PassengerEntity;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.sql.Timestamp;
@@ -42,11 +43,13 @@ public final class TicketDTO {
     /**
      * Get the value of createdOn. Necessary for json serialization.
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX", timezone = "UTC")
     public Timestamp getCreatedOn() {return createdOn;}
 
     /**
      * Get the value of validatedOn. Necessary for json serialization.
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX", timezone = "UTC")
     public Timestamp getValidatedOn() {return validatedOn;}
 
     /**
