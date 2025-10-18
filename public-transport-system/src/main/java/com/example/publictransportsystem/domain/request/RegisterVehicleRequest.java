@@ -5,12 +5,17 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jdk.nashorn.internal.ir.annotations.Immutable;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 @Immutable
 public final class RegisterVehicleRequest {
+    @Valid
+    @NotNull
     private final VehicleDTO vehicles;
 
     @JsonCreator
-    public RegisterVehicleRequest(@JsonProperty("vehicle") VehicleDTO vehicles) {
+    public RegisterVehicleRequest(@Valid @JsonProperty("vehicle") VehicleDTO vehicles) {
         this.vehicles = vehicles;
     }
 

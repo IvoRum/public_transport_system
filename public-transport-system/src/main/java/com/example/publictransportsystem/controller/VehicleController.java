@@ -13,6 +13,7 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
@@ -38,7 +39,7 @@ public class VehicleController {
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "Register a new vehicle", description = "Returns a the newly registered vehicle")
     @APIResponse(responseCode = "200", description = "List of vehicles")
-    public RegisterVehicleResponse registerVehicle(@RequestBody final RegisterVehicleRequest request) {
+    public RegisterVehicleResponse registerVehicle(@Valid @RequestBody final RegisterVehicleRequest request) {
         //validate?
         try {
             return new RegisterVehicleResponse(vehicleService.registerVehicle(request), VehicleRequestStatus.SUCCESS);
