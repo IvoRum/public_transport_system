@@ -1,5 +1,4 @@
 package com.example.publictransportsystem.controller;
-import com.example.publictransportsystem.domain.dto.VehicleDTO;
 import com.example.publictransportsystem.domain.request.RegisterVehicleRequest;
 import com.example.publictransportsystem.domain.response.RegisterVehicleResponse;
 import com.example.publictransportsystem.domain.response.AllVehiclesResponse;
@@ -35,7 +34,7 @@ public class VehicleController {
         return new AllVehiclesResponse(vehicleService.getAllVehicles(), VehicleRequestStatus.SUCCESS);
     }
 
-    @PUT
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "Register a new vehicle", description = "Returns a the newly registered vehicle")
     @APIResponse(responseCode = "200", description = "List of vehicles")
@@ -44,9 +43,9 @@ public class VehicleController {
         try {
             return new RegisterVehicleResponse(vehicleService.registerVehicle(request), VehicleRequestStatus.SUCCESS);
         } catch (EntityNotFoundException e) {
-            return new RegisterVehicleResponse(request.getVehicleDTO(), VehicleRequestStatus.VEHICLE_TYPE_NOT_FOUND);
+            return new RegisterVehicleResponse(request.getVehicles(), VehicleRequestStatus.VEHICLE_TYPE_NOT_FOUND);
         } catch (VehicleRegisteredException e){
-            return new RegisterVehicleResponse(request.getVehicleDTO(), VehicleRequestStatus.VEHICLE_ALREADY_REGISTERED);
+            return new RegisterVehicleResponse(request.getVehicles(), VehicleRequestStatus.VEHICLE_ALREADY_REGISTERED);
         }
     }
 }

@@ -10,6 +10,7 @@ import com.example.publictransportsystem.repository.VehicleRepository;
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +28,7 @@ public class VehicleService {
      *
      * @return The list of all registered vehicles in the system.
      */
+    @Transactional
     public List<VehicleDTO> getAllVehicles() {
         return vehicleRepository.findAllVehicles().stream()
                 .map(VehicleEntity::toDTO)
@@ -41,12 +43,13 @@ public class VehicleService {
      * @throws EntityNotFoundException if the vehicle type specified in the request does not exist.
      * @throws VehicleRegisteredException if a vehicle with the same registration number is already registered.
      */
+    @Transactional
     public VehicleDTO registerVehicle(final RegisterVehicleRequest request)
             throws EntityNotFoundException, VehicleRegisteredException {
         assert request != null: "Request must not be null";
 
-        final VehicleEntity vehicleEntity = VehicleEntity.fromDTO(request.getVehicleDTO());
-        vehicleEntity.setType(vehicleRepository.findVehicleTypeByName(request.getVehicleDTO().getType())
+        final VehicleEntity vehicleEntity = VehicleEntity.fromDTO(request.getVehicles());
+        vehicleEntity.setType(vehicleRepository.findVehicleTypeByName(request.getVehicles().getType())
                 .orElseThrow(() -> new EntityNotFoundException(VehicleTypeEntity.class.getName())));
 
         final VehicleEntity insertedVehicle= vehicleRepository.insertIfNotPresent(vehicleEntity)

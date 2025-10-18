@@ -1,18 +1,19 @@
 package com.example.publictransportsystem.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jdk.nashorn.internal.ir.annotations.Immutable;
 
-@Immutable
 public final class VehicleDTO {
-    @JsonProperty("registration_number")
-    private String registrationNumber;
-    @JsonProperty("passenger_capacity")
-    private int passengerCapacity;
-    @JsonProperty
-    private String type;
+    private final String registrationNumber;
+    private final int passengerCapacity;
+    private final String type;
 
-    public VehicleDTO(final String registrationNumber,final int passengerCapacity,final String type) {
+    @JsonCreator
+    public VehicleDTO(
+            @JsonProperty("registration_number") String registrationNumber,
+            @JsonProperty("passenger_capacity") int passengerCapacity,
+            @JsonProperty("type") String type
+    ) {
         this.registrationNumber = registrationNumber;
         this.passengerCapacity = passengerCapacity;
         this.type = type;

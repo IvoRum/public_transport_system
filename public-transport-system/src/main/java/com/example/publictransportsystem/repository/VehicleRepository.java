@@ -50,9 +50,9 @@ public final class VehicleRepository extends BaseRepositoryJPA{
                 .getResultList();
         if (result.isEmpty()) {
             entityManager.persist(vehicleEntity);
-            return Optional.empty();
+            return Optional.of(vehicleEntity);
         } else {
-            return Optional.of(result.get(0));
+            return Optional.empty();
         }
     }
 }
