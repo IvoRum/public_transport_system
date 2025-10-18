@@ -1,5 +1,6 @@
 package com.example.publictransportsystem.controller;
 
+import com.example.publictransportsystem.domain.dto.TicketDTO;
 import com.example.publictransportsystem.domain.request.IssyTicketRequest;
 import com.example.publictransportsystem.domain.response.IssyTicketResponse;
 import com.example.publictransportsystem.domain.status.TicketRequestStatus;
@@ -33,6 +34,10 @@ public class TicketController {
     @Operation(summary = "Register a new vehicle", description = "Returns a the newly registered vehicle")
     @APIResponse(responseCode = "200", description = "List of vehicles")
     public IssyTicketResponse issyTicket(@Valid @RequestBody IssyTicketRequest request){
-        return new IssyTicketResponse(ticketService.issyTicket(request), TicketRequestStatus.SUCCESS);
+        try{
+            return new IssyTicketResponse(ticketService.issyTicket(request), TicketRequestStatus.SUCCESS);
+        } catch (Exception e){
+            return new IssyTicketResponse(null, TicketRequestStatus.FAILED);
+        }
     }
 }

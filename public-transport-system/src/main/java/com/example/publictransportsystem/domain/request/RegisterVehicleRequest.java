@@ -8,6 +8,9 @@ import jdk.nashorn.internal.ir.annotations.Immutable;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+/**
+ * Request to register a vehicle. Will contain vehicle details. Will map to json request body.
+ */
 @Immutable
 public final class RegisterVehicleRequest {
     @Valid

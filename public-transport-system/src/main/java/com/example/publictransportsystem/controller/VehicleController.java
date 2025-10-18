@@ -40,7 +40,6 @@ public class VehicleController {
     @Operation(summary = "Register a new vehicle", description = "Returns a the newly registered vehicle")
     @APIResponse(responseCode = "200", description = "List of vehicles")
     public RegisterVehicleResponse registerVehicle(@Valid @RequestBody final RegisterVehicleRequest request) {
-        //validate?
         try {
             return new RegisterVehicleResponse(vehicleService.registerVehicle(request), VehicleRequestStatus.SUCCESS);
         } catch (EntityNotFoundException e) {

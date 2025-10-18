@@ -29,15 +29,33 @@ public final class TicketDTO {
         this.validated = validated;
     }
 
+    /**
+     * Get the value of vehicle. Necessary for json serialization.
+     */
     public VehicleDTO getVehicle() {return vehicle;}
 
+    /**
+     * Get the value of code. Necessary for json serialization.
+     */
     public String getCode() {return code;}
 
+    /**
+     * Get the value of createdOn. Necessary for json serialization.
+     */
     public Timestamp getCreatedOn() {return createdOn;}
 
+    /**
+     * Get the value of validatedOn. Necessary for json serialization.
+     */
     public Timestamp getValidatedOn() {return validatedOn;}
 
+    /**
+     * Get the value of passengerEntity. Necessary for json serialization.
+     */
     public PassengerEntity getPassengerEntity() {return passengerEntity;}
 
+    /**
+     * Get the value of validated. Necessary for json serialization.
+     */
     public boolean isValidated() {return validated;}
 }

@@ -12,6 +12,10 @@ public final class RegisterVehicleResponse extends BaseResponse {
         this.vehicleDTO = vehicleDTO;
     }
 
+    /**
+     * Get the value of vehicleDTO. Necessary for json serialization.
+     * @return vehicleDTO
+     */
     public VehicleDTO getVehicleDTO() {
         return vehicleDTO;
     }

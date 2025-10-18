@@ -29,14 +29,23 @@ public final class VehicleDTO {
         this.type = type;
     }
 
+    /**
+     * Get the value of registrationNumber. Necessary for json serialization.
+     */
     public String getRegistrationNumber() {
         return registrationNumber;
     }
 
+    /**
+     * Get the value of passengerCapacity. Necessary for json serialization.
+     */
     public int getPassengerCapacity() {
         return passengerCapacity;
     }
 
+    /**
+     * Get the value of type. Necessary for json serialization.
+     */
     public String getType() {
         return type;
     }

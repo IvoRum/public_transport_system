@@ -14,6 +14,10 @@ public final class AllVehiclesResponse extends BaseResponse {
         this.vehicles = vehicles;
     }
 
+    /**
+     * Get the value of vehicles. Necessary for json serialization.
+     * @return vehicles
+     */
     public List<VehicleDTO> getVehicles() {
         return vehicles;
     }

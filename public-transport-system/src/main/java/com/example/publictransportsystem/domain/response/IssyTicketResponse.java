@@ -5,16 +5,24 @@ import com.example.publictransportsystem.domain.status.TicketRequestStatus;
 
 import javax.validation.Valid;
 
-public class IssyTicketResponse {
-    private TicketDTO ticket;
-    private TicketRequestStatus status;
+public final class IssyTicketResponse {
+    private final TicketDTO ticket;
+    private final TicketRequestStatus status;
 
     public IssyTicketResponse(@Valid final TicketDTO ticket,final TicketRequestStatus status) {
         this.ticket = ticket;
         this.status = status;
     }
 
+    /**
+     * Get the value of ticket. Necessary for json serialization.
+     * @return ticket
+     */
     public TicketDTO getTicket() {return ticket;}
 
+    /**
+     *  Get the value of status. Necessary for json serialization.
+     * @return status
+     */
     public TicketRequestStatus getStatus() {return status;}
 }

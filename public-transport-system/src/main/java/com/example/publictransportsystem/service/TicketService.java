@@ -16,6 +16,9 @@ import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.time.Instant;
 
+/**
+ * Service for managing tickets in the public transport system.
+ */
 @Dependent
 public class TicketService {
 

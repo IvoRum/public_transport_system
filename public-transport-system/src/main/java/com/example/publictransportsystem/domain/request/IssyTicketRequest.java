@@ -6,6 +6,9 @@ import jdk.nashorn.internal.ir.annotations.Immutable;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * Request to issue a ticket. Will contain vehicle number and passenger name. Will map to json request body.
+ */
 @Immutable
 public final class IssyTicketRequest {
     @NotNull
