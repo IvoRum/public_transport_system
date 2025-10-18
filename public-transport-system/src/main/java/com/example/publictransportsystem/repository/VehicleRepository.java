@@ -2,18 +2,57 @@ package com.example.publictransportsystem.repository;
 
 
 import com.example.publictransportsystem.persitence.VehicleEntity;
+import com.example.publictransportsystem.persitence.VehicleTypeEntity;
 
 import javax.enterprise.context.Dependent;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Optional;
 
+/**
+ * Repository for managing VehicleEntity and VehicleTypeEntity.
+ */
 @Dependent
 public final class VehicleRepository extends BaseRepositoryJPA{
-//    @PersistenceContext
-//    private EntityManager entityManager;
 
     public List<VehicleEntity> findAllVehicles() {
-        return entityManager.createQuery("SELECT v FROM VehicleEntity v", VehicleEntity.class).getResultList();
+        return entityManager.createQuery("SELECT v FROM VehicleEntity v JOIN FETCH v.type", VehicleEntity.class).getResultList();
+    }
+
+    /**
+     * Find vehicle type by its name.
+     *
+     * @param typeName The name of the vehicle type. Must not be null.
+     * @return Optional containing the VehicleTypeEntity if found, or Optional.empty() if not found.
+     */
+    public Optional<VehicleTypeEntity> findVehicleTypeByName(final String typeName) {
+        assert typeName != null : "Type name must not be null";
+
+        List<VehicleTypeEntity> result = entityManager.createQuery(
+                "SELECT vt FROM VehicleTypeEntity vt WHERE vt.name = :name", VehicleTypeEntity.class)
+                .setParameter("name", typeName)
+                .getResultList();
+        return result.isEmpty() ? Optional.empty() : Optional.of(result.get(0));
+    }
+
+    /**
+     * Will insert the vehicleEntity if there is no other entity with the same registration number.
+     *
+     * @param vehicleEntity The vehicle entity to insert. Must not be null. Registration number must not be null.
+     * @return Optional.empty() if the entity was inserted, or Optional.of(existingEntity) if an entity with the same
+     */
+    public Optional<VehicleEntity> insertIfNotPresent(final VehicleEntity vehicleEntity) {
+        assert vehicleEntity != null : "VehicleEntity must not be null";
+        assert vehicleEntity.getRegistrationNumber() != null : "Registration number must not be null";
+
+        List<VehicleEntity> result = entityManager.createQuery(
+                "SELECT v FROM VehicleEntity v WHERE v.registrationNumber = :regNum", VehicleEntity.class)
+                .setParameter("regNum", vehicleEntity.getRegistrationNumber())
+                .getResultList();
+        if (result.isEmpty()) {
+            entityManager.persist(vehicleEntity);
+            return Optional.empty();
+        } else {
+            return Optional.of(result.get(0));
+        }
     }
 }

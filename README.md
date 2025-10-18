@@ -120,6 +120,14 @@ jboss-deployment-structure.xml
 </jboss-deployment-structure>
 ```
 
+## Anotaions
+
+@Dependent - Е за когато искаме нова иснтанция за всяко инйектиране
+
+@RequestScoped - Е един път за всяко исвикване по HTTP
+
+@ApplicationScoped - Единпът се инициализира за цялото проложение. Нещо като singoltun
+
 ## OpenAPI link
 
 http://localhost:8080/public-transport-system-1.0-SNAPSHOT/openapi

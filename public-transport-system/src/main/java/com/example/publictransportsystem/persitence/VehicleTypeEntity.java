@@ -4,12 +4,12 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Vehicle_type")
-public final class VehicleTypeEntity {
+public class VehicleTypeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "name", nullable = false, length = 100)
+    @Column(nullable = false, length = 100)
     private String name;
 
     public void setId(final long id) {

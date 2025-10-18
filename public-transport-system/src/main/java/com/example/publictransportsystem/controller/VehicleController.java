@@ -1,18 +1,21 @@
 package com.example.publictransportsystem.controller;
-import com.example.publictransportsystem.persitence.VehicleEntity;
+import com.example.publictransportsystem.domain.dto.VehicleDTO;
+import com.example.publictransportsystem.domain.request.RegisterVehicleRequest;
+import com.example.publictransportsystem.domain.response.RegisterVehicleResponse;
+import com.example.publictransportsystem.domain.response.AllVehiclesResponse;
+import com.example.publictransportsystem.domain.status.VehicleRequestStatus;
+import com.example.publictransportsystem.exeptions.EntityNotFoundException;
+import com.example.publictransportsystem.exeptions.VehicleRegisteredException;
 import com.example.publictransportsystem.service.VehicleService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.List;
 
 @Path("/vehicles")
 @Tag(name = "Vehicles", description = "Operations related to vehicles")
@@ -28,7 +31,22 @@ public class VehicleController {
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "Get all vehicles", description = "Returns a list of all vehicles in the system")
     @APIResponse(responseCode = "200", description = "List of vehicles")
-    public List<VehicleEntity> getAllVehicles() {
-        return vehicleService.getAllVehicles();
+    public AllVehiclesResponse getAllVehicles() {
+        return new AllVehiclesResponse(vehicleService.getAllVehicles(), VehicleRequestStatus.SUCCESS);
+    }
+
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Register a new vehicle", description = "Returns a the newly registered vehicle")
+    @APIResponse(responseCode = "200", description = "List of vehicles")
+    public RegisterVehicleResponse registerVehicle(@RequestBody final RegisterVehicleRequest request) {
+        //validate?
+        try {
+            return new RegisterVehicleResponse(vehicleService.registerVehicle(request), VehicleRequestStatus.SUCCESS);
+        } catch (EntityNotFoundException e) {
+            return new RegisterVehicleResponse(request.getVehicleDTO(), VehicleRequestStatus.VEHICLE_TYPE_NOT_FOUND);
+        } catch (VehicleRegisteredException e){
+            return new RegisterVehicleResponse(request.getVehicleDTO(), VehicleRequestStatus.VEHICLE_ALREADY_REGISTERED);
+        }
     }
 }
