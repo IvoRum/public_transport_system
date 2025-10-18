@@ -1,6 +1,5 @@
 package com.example.publictransportsystem.domain.dto;
 
-import com.example.publictransportsystem.persitence.PassengerEntity;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
