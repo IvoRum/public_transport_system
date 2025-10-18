@@ -84,7 +84,7 @@ public class TicketEntity {
                 code,
                 createdOn,
                 validatedOn,
-                passengerEntity,
+                passengerEntity.getName(),
                 validated
         );
     }

@@ -11,7 +11,7 @@ public final class TicketDTO {
     private final String code;
     private final Timestamp createdOn;
     private final Timestamp validatedOn;
-    private final PassengerEntity passengerEntity;
+    private final String passenger;
     private final boolean validated;
 
     @JsonCreator
@@ -19,13 +19,13 @@ public final class TicketDTO {
                       @JsonProperty("code") final String code,
                       @JsonProperty("created_on") final Timestamp createdOn,
                       @JsonProperty("validated_on") final Timestamp validatedOn,
-                      @JsonProperty("passenger_entity") final PassengerEntity passengerEntity,
+                      @JsonProperty("passenger") final String passengerEntity,
                       @JsonProperty("validated") final boolean validated) {
         this.vehicle = vehicle;
         this.code = code;
         this.createdOn = createdOn;
         this.validatedOn = validatedOn;
-        this.passengerEntity = passengerEntity;
+        this.passenger = passengerEntity;
         this.validated = validated;
     }
 
@@ -50,9 +50,9 @@ public final class TicketDTO {
     public Timestamp getValidatedOn() {return validatedOn;}
 
     /**
-     * Get the value of passengerEntity. Necessary for json serialization.
+     * Get the value of passenger. Necessary for json serialization.
      */
-    public PassengerEntity getPassengerEntity() {return passengerEntity;}
+    public String getPassenger() {return passenger;}
 
     /**
      * Get the value of validated. Necessary for json serialization.

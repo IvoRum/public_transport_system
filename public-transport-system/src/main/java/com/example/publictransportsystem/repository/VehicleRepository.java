@@ -13,7 +13,7 @@ import java.util.Optional;
  * Repository for managing VehicleEntity and VehicleTypeEntity.
  */
 @Dependent
-public final class VehicleRepository extends BaseRepositoryJPA{
+public class VehicleRepository extends BaseRepositoryJPA{
 
     public List<VehicleEntity> findAllVehicles() {
         return entityManager.createQuery("SELECT v FROM VehicleEntity v JOIN FETCH v.type", VehicleEntity.class).getResultList();

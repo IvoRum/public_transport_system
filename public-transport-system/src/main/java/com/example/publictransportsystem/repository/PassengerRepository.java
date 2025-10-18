@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Dependent
-public final class PassengerRepository extends BaseRepositoryJPA{
+public class PassengerRepository extends BaseRepositoryJPA{
 
     public  Optional<PassengerEntity> findPassengerByName(final String personName) {
         final TypedQuery<PassengerEntity> query = entityManager.createQuery(
