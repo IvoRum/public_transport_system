@@ -28,37 +28,21 @@ public class VehicleEntity {
         return vehicleEntity;
     }
 
-    public long getId() {
-        return id;
-    }
+    public long getId() {return id;}
 
-    public void setId(final long id) {
-        this.id = id;
-    }
+    public void setId(final long id) {this.id = id;}
 
-    public String getRegistrationNumber() {
-        return registrationNumber;
-    }
+    public String getRegistrationNumber() {return registrationNumber;}
 
-    public void setRegistrationNumber(String registrationNumber) {
-        this.registrationNumber = registrationNumber;
-    }
+    public void setRegistrationNumber(String registrationNumber) {this.registrationNumber = registrationNumber;}
 
-    public int getPassengerCapacity() {
-        return passengerCapacity;
-    }
+    public int getPassengerCapacity() {return passengerCapacity;}
 
-    public void setPassengerCapacity(final int passengerCapacity) {
-        this.passengerCapacity = passengerCapacity;
-    }
+    public void setPassengerCapacity(final int passengerCapacity) {this.passengerCapacity = passengerCapacity;}
 
-    public VehicleTypeEntity getType() {
-        return type;
-    }
+    public VehicleTypeEntity getType() {return type;}
 
-    public void setType(final VehicleTypeEntity type) {
-        this.type = type;
-    }
+    public void setType(final VehicleTypeEntity type) {this.type = type;}
 
     public VehicleDTO toDTO() {
         return new VehicleDTO(
