@@ -2,24 +2,6 @@
 
 A lightweight backend system for managing ticketing in a public transport compan
 
-# OpenAPI link
-
-http://localhost:8080/public-transport-system-1.0-SNAPSHOT/openapi
-
-http://localhost:8080/public-transport-system-1.0-SNAPSHOT/api/openapi
-
-http://localhost:8080/your-app/openapi
-
-http://localhost:8080/openapi
-
-http://localhost:8080/swagger
-
-final
-
-http://localhost:8080/public-transport-system-1.0-SNAPSHOT/openapi
-
-http://localhost:8080/public-transport-system-1.0-SNAPSHOT/openapi/ui
-
 # Dev notes
 
 ## Run WildFlt 18
@@ -137,3 +119,33 @@ jboss-deployment-structure.xml
     </deployment>
 </jboss-deployment-structure>
 ```
+
+## OpenAPI link
+
+http://localhost:8080/public-transport-system-1.0-SNAPSHOT/openapi
+
+http://localhost:8080/public-transport-system-1.0-SNAPSHOT/openapi.json
+
+http://localhost:8080/public-transport-system-1.0-SNAPSHOT/api/openapi
+
+http://localhost:8080/public-transport-system-1.0-SNAPSHOT/api
+
+http://localhost:8080/openapi
+
+http://localhost:8080/swagger
+
+http://localhost:8080/openapi/swagger
+
+http://localhost:8080/public-transport-system-1.0-SNAPSHOT/swagger
+
+http://localhost:8080/public-transport-system-1.0-SNAPSHOT/api/swagger
+
+new
+
+http://localhost:8080/public-transport-system-1.0-SNAPSHOT/api/openapi
+
+final
+
+http://localhost:8080/public-transport-system-1.0-SNAPSHOT/openapi
+
+http://localhost:8080/public-transport-system-1.0-SNAPSHOT/openapi/ui
