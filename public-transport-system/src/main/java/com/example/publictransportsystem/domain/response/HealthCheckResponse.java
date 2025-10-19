@@ -18,11 +18,16 @@ public final class HealthCheckResponse {
         return new HealthCheckResponse( false, massage);
     }
 
-
+    /**
+     * Necessary for json serialization.
+     */
     public boolean isUp() {
         return up;
     }
 
+    /**
+     * Necessary for json serialization.
+     */
     public String getMessage() {
         return message;
     }

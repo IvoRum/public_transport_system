@@ -357,3 +357,27 @@ final
 http://localhost:8080/public-transport-system-1.0-SNAPSHOT/openapi
 
 http://localhost:8080/public-transport-system-1.0-SNAPSHOT/openapi/ui
+
+# Loging
+
+```java
+@Interceptor
+@TransactionLogged
+public class TransactionLoggingInterceptor {
+    private static final Logger logger = Logger.getLogger("com.example.publictransportsystem.transactionlogger");
+    @AroundInvoke
+    public Object logTransaction(InvocationContext ctx) throws Exception {
+        //logger.info("Transaction START: {}.{}", ctx.getTarget().getClass().getSimpleName(), ctx.getMethod().getName());
+        logger.info("Transaction START: {}.{}");
+        try {
+            Object result = ctx.proceed();
+            //logger.info("Transaction END: {}.{}", ctx.getTarget().getClass().getSimpleName(), ctx.getMethod().getName());
+            logger.info("Transaction END: {}.{}");
+            return result;
+        } catch (Exception e) {
+            //logger.error("Transaction ERROR: {}.{}", ctx.getTarget().getClass().getSimpleName(), ctx.getMethod().getName(), e);
+            logger.severe(String.format("Transaction ERROR: %s.%s", ctx.getTarget().getClass().getSimpleName(), ctx.getMethod().getName()));            throw e;
+        }
+    }
+}
+```

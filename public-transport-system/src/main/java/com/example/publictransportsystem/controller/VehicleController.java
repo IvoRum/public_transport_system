@@ -5,6 +5,7 @@ import com.example.publictransportsystem.domain.response.AllVehiclesResponse;
 import com.example.publictransportsystem.domain.status.VehicleRequestStatus;
 import com.example.publictransportsystem.exeptions.EntityNotFoundException;
 import com.example.publictransportsystem.exeptions.VehicleRegisteredException;
+import com.example.publictransportsystem.interceptor.TransactionLogged;
 import com.example.publictransportsystem.service.VehicleService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
@@ -22,6 +23,7 @@ import javax.ws.rs.core.MediaType;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @ApplicationScoped
+@TransactionLogged
 public class VehicleController {
 
     @Inject

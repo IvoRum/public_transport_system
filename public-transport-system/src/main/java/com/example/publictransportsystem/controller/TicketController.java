@@ -5,6 +5,7 @@ import com.example.publictransportsystem.domain.response.GetAllTicketsForVehicle
 import com.example.publictransportsystem.domain.response.IssyTicketResponse;
 import com.example.publictransportsystem.domain.response.ValidateTicketResponse;
 import com.example.publictransportsystem.domain.status.TicketRequestStatus;
+import com.example.publictransportsystem.interceptor.TransactionLogged;
 import com.example.publictransportsystem.service.TicketService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
@@ -22,6 +23,7 @@ import javax.ws.rs.core.MediaType;
 @Path("/ticket")
 @Tag(name = "Ticket", description = "Creating and validation tickets")
 @ApplicationScoped
+@TransactionLogged
 public class TicketController {
 
     @Inject
