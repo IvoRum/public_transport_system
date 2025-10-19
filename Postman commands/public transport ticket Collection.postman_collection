@@ -1,0 +1,100 @@
+{
+	"info": {
+		"_postman_id": "4f445fb6-173b-40eb-bddf-1b170bc6554b",
+		"name": "New Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "28656173"
+	},
+	"item": [
+		{
+			"name": "Get All vihicles",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/public-transport-system-1.0-SNAPSHOT/api/vehicles"
+			},
+			"response": []
+		},
+		{
+			"name": "Register Vehicle",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"vehicle\": {\r\n    \"registration_number\": \"CB1234AB\",\r\n    \"passenger_capacity\": 60,\r\n    \"type\": \"BUS\"\r\n  }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/public-transport-system-1.0-SNAPSHOT/api/vehicles"
+			},
+			"response": []
+		},
+		{
+			"name": "Register ticket",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"vehicle_number\": \"H7872BT\",\r\n    \"passenger_name\": \"Ivan\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/public-transport-system-1.0-SNAPSHOT/api/ticket"
+			},
+			"response": []
+		},
+		{
+			"name": "Validate ticket",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": "http://localhost:8080/public-transport-system-1.0-SNAPSHOT/api/ticket/PT-6BA3BFD5"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All tickets for a given vehicle number",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/public-transport-system-1.0-SNAPSHOT/api/ticket/H7872BT"
+			},
+			"response": []
+		},
+		{
+			"name": "Helth check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/public-transport-system-1.0-SNAPSHOT/api/metrics/health"
+			},
+			"response": []
+		},
+		{
+			"name": "Get all logs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/public-transport-system-1.0-SNAPSHOT/api/metrics/logs"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Metrics",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/public-transport-system-1.0-SNAPSHOT/api/metrics"
+			},
+			"response": []
+		}
+	]
+}
