@@ -6,10 +6,24 @@ This project is a `Java`-based web application built using `Maven`, leveraging t
 
 # Build and run the app
 
+# h2 version - Recomendet!
+
+Just run the docker command and ahve acces to all the API localy
+
+```
+docker run -it --rm -p 8080:8080 -p 9990:9990 ivorum/wildfly-h2-public-transport-system
+
+```
+
+## PosgreSQl version
+
+Build the project by using Maven and runs whit docker compose
+
 ```
 cd public-transport-system
 mvn clean package
 docker-compose build
+docker-compose up
 ```
 
 # Vehicle API Endpoints
@@ -322,6 +336,21 @@ port `9990` is for wildFly admin acces to configure whe web server.
 
 Here is the url to the Docker repository:
 https://hub.docker.com/repository/docker/ivorum/wildfly-public-transport/general
+
+### H2 version build commands
+
+```
+
+docker run -it --rm -p 8080:8080 -p 9990:9990 ivorum/wildfly-h2-public-transport-system:latest
+
+docker run -it --rm -p 8080:8080 -p 9990:9990 wildfly-h2-public-transport-system
+
+docker tag wildfly-h2-public-transport-system ivorum/wildfly-h2-public-transport-system:latest
+docker login
+docker push ivorum/wildfly-h2-public-transport-system:latest
+
+docker run -it --rm -p 8080:8080 -p 9990:9990 ivorum/wildfly-h2-public-transport-system
+```
 
 ## Docker compose build and push to repository
 
