@@ -2,6 +2,83 @@
 
 A lightweight backend system for managing ticketing in a public transport compan
 
+# Vehicle API Endpoints
+
+### Get All Vehicles
+
+URL: `/vehicles`
+
+Method: `GET`
+
+Description: Returns a list of all vehicles in the system.
+
+Response:
+200 OK — AllVehiclesResponse (list of vehicles and status)
+
+Example:
+`api/vehicles`
+
+Result:
+
+```Json
+{
+    "status": "SUCCESS",
+    "vehicles": [
+        {
+            "type": "BUS",
+            "registrationNumber": "H7872BT",
+            "passengerCapacity": 40
+        }
+    ]
+}
+```
+
+<hr></hr>
+
+### Register a New Vehicle
+
+URL: `/vehicles`
+
+Method: `POST`
+
+Description: Registers a new vehicle and returns the newly registered vehicle.
+
+Request Body:
+
+JSON object matching RegisterVehicleRequest
+
+Response:
+200 OK — RegisterVehicleResponse (registered vehicle and status)
+If the vehicle type is not found: status VEHICLE_TYPE_NOT_FOUND
+If the vehicle is already registered: status VEHICLE_ALREADY_REGISTERED
+
+Example:
+
+```json
+{
+  "vehicle": {
+    "registration_number": "CB1234AB",
+    "passenger_capacity": 60,
+    "type": "BUS"
+  }
+}
+```
+
+Result:
+
+```json
+{
+  "status": "SUCCESS",
+  "vehicleDTO": {
+    "type": "BUS",
+    "registrationNumber": "CB1234AB",
+    "passengerCapacity": 60
+  }
+}
+```
+
+<hr></hr>
+
 # Ticket API Endpoints
 
 ### Issue a New Ticket
@@ -54,8 +131,7 @@ Method: `PATCH`
 Path Parameter: ticketId (string, required) — The unique ticket code
 Response: 200 OK with ValidateTicketResponse (ticket details and status)
 
-Example:
-`/api/ticket/PT-C8828D03`
+Example: `/api/ticket/PT-C8828D03`
 
 Return:
 
@@ -88,9 +164,7 @@ Method: `GET`
 Path Parameter: registrationNumber (string, required) — The vehicle registration number
 Response: 200 OK with GetAllTicketsForVehiclesResponse (list of tickets and status)
 
-Example:
-
-`http://localhost:8080/public-transport-system-1.0-SNAPSHOT/api/ticket/H7872BT`
+Example: `/api/ticket/H7872BT`
 
 Result:
 
