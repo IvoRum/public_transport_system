@@ -17,7 +17,7 @@ import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.List;
 
-@Path("/Metrics")
+@Path("/metrics")
 @ApplicationScoped
 @TransactionLogged
 public class MetricsController {

@@ -5,6 +5,8 @@ import com.example.publictransportsystem.domain.response.GetAllTicketsForVehicle
 import com.example.publictransportsystem.domain.response.IssyTicketResponse;
 import com.example.publictransportsystem.domain.response.ValidateTicketResponse;
 import com.example.publictransportsystem.domain.status.TicketRequestStatus;
+import com.example.publictransportsystem.exeptions.EntityNotFoundException;
+import com.example.publictransportsystem.exeptions.TicketWasValidatedException;
 import com.example.publictransportsystem.interceptor.TransactionLogged;
 import com.example.publictransportsystem.service.TicketService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
@@ -38,8 +40,8 @@ public class TicketController {
     public IssyTicketResponse issyTicket(@Valid @RequestBody IssyTicketRequest request){
         try{
             return new IssyTicketResponse(ticketService.issyTicket(request), TicketRequestStatus.SUCCESS);
-        } catch (Exception e){
-            return new IssyTicketResponse(null, TicketRequestStatus.FAILED);
+        } catch (EntityNotFoundException e){
+            return new IssyTicketResponse(null, TicketRequestStatus.INVALID_TICKET_DATA);
         }
     }
 
@@ -52,8 +54,10 @@ public class TicketController {
     public ValidateTicketResponse validateTicket(@PathParam("ticketId") @NotNull @NotEmpty String ticketCode){
         try{
             return new ValidateTicketResponse(ticketService.validateTicket(ticketCode), TicketRequestStatus.SUCCESS);
-        } catch (IllegalArgumentException e){
-            return new ValidateTicketResponse(null, TicketRequestStatus.FAILED);
+        } catch (EntityNotFoundException | IllegalArgumentException e) {
+            return new ValidateTicketResponse(null, TicketRequestStatus.INVALID_TICKET_DATA);
+        }catch (TicketWasValidatedException e){
+            return new ValidateTicketResponse(null, TicketRequestStatus.TICKET_REGISTERED_ALREADY);
         }
     }
 
