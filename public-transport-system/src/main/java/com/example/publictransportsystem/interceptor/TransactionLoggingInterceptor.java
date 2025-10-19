@@ -1,7 +1,7 @@
 package com.example.publictransportsystem.interceptor;
 
-import com.example.publictransportsystem.persitence.TransactionLogEntity;
-import com.example.publictransportsystem.repository.LogRepository;
+import com.example.publictransportsystem.persitence.ApplicationLogEntity;
+import com.example.publictransportsystem.repository.ApplicationLogRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,6 +10,7 @@ import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 
 
 @Interceptor
@@ -17,36 +18,40 @@ import javax.transaction.Transactional;
 public class TransactionLoggingInterceptor {
     private static final Logger logger = LoggerFactory.getLogger(TransactionLoggingInterceptor.class);
     @Inject
-    private LogRepository logRepository;
+    private ApplicationLogRepository applicationLogRepository;
 
     @AroundInvoke
     @Transactional
     public Object logTransaction(InvocationContext ctx) throws Exception {
-        String className = ctx.getTarget().getClass().getSimpleName();
-        String methodName = ctx.getMethod().getName();
-        final TransactionLogEntity transactionLogEntity = new TransactionLogEntity();
-        transactionLogEntity.setClassName(className);
-        transactionLogEntity.setMethodName(methodName);
-        transactionLogEntity.setMessage("Transaction START");
+        final String className = ctx.getTarget().getClass().getSimpleName();
+        final String methodName = ctx.getMethod().getName();
+        final LocalDateTime ts = LocalDateTime.now();
+
+        final ApplicationLogEntity applicationLogEntity = getApplicationLogEntity(className, methodName, "Transaction START");
+        applicationLogEntity.setTimestamp(ts);
         logger.info("Transaction START: {}.{}", className, methodName);
-        logRepository.logMessage(transactionLogEntity);
+        applicationLogRepository.logMessage(applicationLogEntity);
         try {
             Object result = ctx.proceed();
             logger.info("Transaction END: {}.{}", className, methodName);
-            final TransactionLogEntity transactionLogEntityEND = new TransactionLogEntity();
-            transactionLogEntityEND.setClassName(className);
-            transactionLogEntityEND.setMethodName(methodName);
-            transactionLogEntityEND.setMessage("Transaction END");
-            logRepository.logMessage(transactionLogEntityEND);
+            final ApplicationLogEntity applicationLogEntityEND = getApplicationLogEntity(className, methodName, "Transaction END");
+            applicationLogEntityEND.setTimestamp(ts);
+            applicationLogRepository.logMessage(applicationLogEntityEND);
             return result;
         } catch (Exception e) {
             logger.error("Transaction ERROR: {}.{} - {}", className, methodName, e.getMessage());
-            transactionLogEntity.setMessage("Transaction ERROR: " + e.getMessage());
-            final TransactionLogEntity transactionLogEntityERROR = new TransactionLogEntity();
-            transactionLogEntityERROR.setClassName(className);
-            transactionLogEntityERROR.setMethodName(methodName);
-            logRepository.logMessage(transactionLogEntityERROR);
+            applicationLogEntity.setMessage("Transaction ERROR: " + e.getMessage());
+            final ApplicationLogEntity applicationLogEntityERROR = getApplicationLogEntity(className, methodName, "Transaction ERROR: " + e.getMessage());
+            applicationLogRepository.logMessage(applicationLogEntityERROR);
             throw e;
         }
+    }
+
+    private static ApplicationLogEntity getApplicationLogEntity(String className, String methodName, String e) {
+        final ApplicationLogEntity applicationLogEntityERROR = new ApplicationLogEntity();
+        applicationLogEntityERROR.setClassName(className);
+        applicationLogEntityERROR.setMethodName(methodName);
+        applicationLogEntityERROR.setMessage(e);
+        return applicationLogEntityERROR;
     }
 }

@@ -2,7 +2,7 @@ package com.example.publictransportsystem.service;
 
 import com.example.publictransportsystem.domain.response.HealthCheckResponse;
 import com.example.publictransportsystem.repository.BaseRepositoryJPA;
-import com.example.publictransportsystem.repository.LogRepository;
+import com.example.publictransportsystem.repository.ApplicationLogRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +25,7 @@ public class MetricsService {
     @Named("baseRepositoryJPA")
     private BaseRepositoryJPA baseRepository;
     @Inject
-    private LogRepository logRepository;
+    private ApplicationLogRepository applicationLogRepository;
 
     /**
      * Perform a health check on the database connection.
@@ -54,7 +54,7 @@ public class MetricsService {
     public List<String> getAllLogs() throws Exception {
         logger.info("Retrieving all application logs");
 
-        return logRepository.getAllLogs().stream().map(log -> log.getTimestamp() + " " + log.getMessage())
+        return applicationLogRepository.getAllLogs().stream().map(log -> log.getTimestamp() + " " + log.getMessage())
         .collect(Collectors.toList());
     }
 }
