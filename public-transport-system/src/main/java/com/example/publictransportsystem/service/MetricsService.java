@@ -1,8 +1,10 @@
 package com.example.publictransportsystem.service;
 
+import com.example.publictransportsystem.domain.dto.MetricsDTO;
 import com.example.publictransportsystem.domain.response.HealthCheckResponse;
 import com.example.publictransportsystem.repository.BaseRepositoryJPA;
 import com.example.publictransportsystem.repository.ApplicationLogRepository;
+import com.example.publictransportsystem.repository.MetricsRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +26,8 @@ public class MetricsService {
     @Inject
     @Named("baseRepositoryJPA")
     private BaseRepositoryJPA baseRepository;
+    @Inject
+    private MetricsRepository metricsRepository;
     @Inject
     private ApplicationLogRepository applicationLogRepository;
 
@@ -56,5 +60,11 @@ public class MetricsService {
 
         return applicationLogRepository.getAllLogs().stream().map(log -> log.getTimestamp() + " " + log.getMessage())
         .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public MetricsDTO getAllMetrics() {
+        logger.info("Retrieving metrics");
+        return metricsRepository.getAllMetrics();
     }
 }

@@ -1,6 +1,8 @@
 package com.example.publictransportsystem.controller;
 
+import com.example.publictransportsystem.domain.response.AllMetricsResponse;
 import com.example.publictransportsystem.domain.response.HealthCheckResponse;
+import com.example.publictransportsystem.domain.status.MetricsRequestStatus;
 import com.example.publictransportsystem.interceptor.TransactionLogged;
 import com.example.publictransportsystem.service.MetricsService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
@@ -15,15 +17,16 @@ import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.List;
 
-@Path("/health")
+@Path("/Metrics")
 @ApplicationScoped
 @TransactionLogged
-public class HealthController {
+public class MetricsController {
 
     @Inject
     private MetricsService metricsService;
 
     @GET
+    @Path("/health")
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "Health Check",
             description = "Checks the health status of the application and its dependencies")
@@ -45,6 +48,20 @@ public class HealthController {
             final List<String> errorResponse = new ArrayList<>();
             errorResponse.add("Error retrieving logs: " + e.getMessage());
             return errorResponse;
+        }
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Get Application metrics",
+            description = "Retrieves the application metrics, number of tickets validated " +
+                    ", total number of tickets & number of vehicles registered")
+    @APIResponse(responseCode = "200", description = "Application metrics")
+    public AllMetricsResponse getAllMetrics() {
+        try {
+            return new AllMetricsResponse(metricsService.getAllMetrics(), MetricsRequestStatus.SUCCESS);
+        } catch (Exception e) {
+            return new AllMetricsResponse(null  , MetricsRequestStatus.FAILED);
         }
     }
 }
