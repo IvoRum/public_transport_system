@@ -7,6 +7,8 @@ import com.example.publictransportsystem.exeptions.VehicleRegisteredException;
 import com.example.publictransportsystem.persitence.VehicleEntity;
 import com.example.publictransportsystem.persitence.VehicleTypeEntity;
 import com.example.publictransportsystem.repository.VehicleRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
  */
 @Dependent
 public class VehicleService {
+    private static final Logger logger = LoggerFactory.getLogger(VehicleService.class);
 
     @Inject
     private VehicleRepository vehicleRepository;
@@ -30,6 +33,7 @@ public class VehicleService {
      */
     @Transactional
     public List<VehicleDTO> getAllVehicles() {
+        logger.info("Retrieving all vehicles");
         return vehicleRepository.findAllVehicles().stream()
                 .map(VehicleEntity::toDTO)
                 .collect(Collectors.toList());
@@ -46,6 +50,7 @@ public class VehicleService {
     @Transactional
     public VehicleDTO registerVehicle(final RegisterVehicleRequest request)
             throws EntityNotFoundException, VehicleRegisteredException {
+        logger.trace("Registering vehicle {}", request);
         assert request != null: "Request must not be null";
 
         final VehicleEntity vehicleEntity = VehicleEntity.fromDTO(request.getVehicles());

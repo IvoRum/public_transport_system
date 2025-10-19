@@ -10,6 +10,8 @@ import com.example.publictransportsystem.persitence.VehicleEntity;
 import com.example.publictransportsystem.repository.PassengerRepository;
 import com.example.publictransportsystem.repository.TicketRepository;
 import com.example.publictransportsystem.repository.VehicleRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
@@ -26,6 +28,7 @@ import java.util.stream.Collectors;
  */
 @Dependent
 public class TicketService {
+    private static final Logger logger = LoggerFactory.getLogger(TicketService.class);
 
     @Inject
     private TicketRepository ticketRepository;
@@ -43,6 +46,7 @@ public class TicketService {
      */
     @Transactional
     public TicketDTO issyTicket(final IssyTicketRequest request) {
+        logger.trace("issyTicket: {}", request);
         assert request != null;
 
         final VehicleEntity foundVehicle = vehicleRepository.findVehicle(request.getVehicleNumber())
@@ -72,6 +76,7 @@ public class TicketService {
      */
     @Transactional
     public TicketDTO validateTicket(@NotNull @NotEmpty final String ticketCode) {
+        logger.trace("validateTicket: {}", ticketCode);
         assert ticketCode != null : "Ticket code must not be null";
 
         final TicketEntity foundTicket = ticketRepository.findTicketByCode(ticketCode)
@@ -96,6 +101,7 @@ public class TicketService {
      * @return List of TicketDTOs associated with the specified vehicle.
      */
     public List<TicketDTO> getTicketsForVehicle(@NotNull @NotEmpty final String registrationNumber) {
+        logger.trace("getTicketsForVehicle: {}", registrationNumber);
         assert registrationNumber != null : "Registration number must not be null";
 
         List<TicketEntity> tickets = ticketRepository.findTicketsByVehicleRegNr(registrationNumber);

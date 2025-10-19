@@ -3,6 +3,8 @@ package com.example.publictransportsystem.service;
 import com.example.publictransportsystem.domain.response.HealthCheckResponse;
 import com.example.publictransportsystem.repository.BaseRepositoryJPA;
 import com.example.publictransportsystem.repository.LogRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
@@ -17,6 +19,8 @@ import java.util.stream.Collectors;
 @Dependent
 public class MetricsService {
 
+    private static final Logger logger = LoggerFactory.getLogger(MetricsService.class);
+
     @Inject
     @Named("baseRepositoryJPA")
     private BaseRepositoryJPA baseRepository;
@@ -30,6 +34,8 @@ public class MetricsService {
      */
     @Transactional
     public HealthCheckResponse healthCheck() {
+        logger.info("Performing database health check");
+
         try{
             baseRepository.isDBConnectionHealthy();
             return HealthCheckResponse.up("Database connection is healthy");
@@ -46,6 +52,8 @@ public class MetricsService {
      */
     @Transactional
     public List<String> getAllLogs() throws Exception {
+        logger.info("Retrieving all application logs");
+
         return logRepository.getAllLogs().stream().map(log -> log.getTimestamp() + " " + log.getMessage())
         .collect(Collectors.toList());
     }
