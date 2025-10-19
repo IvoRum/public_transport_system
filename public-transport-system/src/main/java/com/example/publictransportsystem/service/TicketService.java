@@ -18,6 +18,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Service for managing tickets in the public transport system.
@@ -85,5 +87,21 @@ public class TicketService {
         final TicketEntity persistedTicket = ticketRepository.persist(foundTicket)
                 .orElseThrow(() -> new EntityNotFoundException(TicketEntity.class.getName()));
         return persistedTicket.toDTO();
+    }
+
+    /**
+     * Retrieve all tickets associated with a specific vehicle registration number.
+     *
+     * @param registrationNumber the registration number of the vehicle. Must not be null or empty.
+     * @return List of TicketDTOs associated with the specified vehicle.
+     */
+    public List<TicketDTO> getTicketsForVehicle(@NotNull @NotEmpty final String registrationNumber) {
+        assert registrationNumber != null : "Registration number must not be null";
+
+        List<TicketEntity> tickets = ticketRepository.findTicketsByVehicleRegNr(registrationNumber);
+
+        return tickets.stream()
+                .map(TicketEntity::toDTO)
+                .collect(Collectors.toList());
     }
 }

@@ -6,6 +6,7 @@ import javax.enterprise.context.Dependent;
 import javax.persistence.NoResultException;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.Optional;
 
 @Dependent
@@ -46,5 +47,20 @@ public class TicketRepository extends BaseRepositoryJPA{
         } catch (NoResultException e) {
             return Optional.empty();
         }
+    }
+
+    /**
+     * Finds all tickets associated with a vehicle's registration number.
+     *
+     * @param registrationNumber the registration number of the vehicle. Must not be null.
+     * @return List of TicketEntity associated with the vehicle. The list will be {@code empty} if no tickets are found.
+     */
+    public List<TicketEntity> findTicketsByVehicleRegNr(final String registrationNumber) {
+        assert registrationNumber != null : "Registration number must not be null";
+
+        return entityManager.createQuery(
+                "SELECT t FROM TicketEntity t WHERE t.vehicle.registrationNumber = :regNr", TicketEntity.class)
+                .setParameter("regNr", registrationNumber)
+                .getResultList();
     }
 }

@@ -1,7 +1,7 @@
 package com.example.publictransportsystem.controller;
 
-import com.example.publictransportsystem.domain.dto.TicketDTO;
 import com.example.publictransportsystem.domain.request.IssyTicketRequest;
+import com.example.publictransportsystem.domain.response.GetAllTicketsForVehiclesResponse;
 import com.example.publictransportsystem.domain.response.IssyTicketResponse;
 import com.example.publictransportsystem.domain.response.ValidateTicketResponse;
 import com.example.publictransportsystem.domain.status.TicketRequestStatus;
@@ -52,6 +52,20 @@ public class TicketController {
             return new ValidateTicketResponse(ticketService.validateTicket(ticketCode), TicketRequestStatus.SUCCESS);
         } catch (IllegalArgumentException e){
             return new ValidateTicketResponse(null, TicketRequestStatus.FAILED);
+        }
+    }
+
+    @GET
+    @Path("/{registrationNumber}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Validates issued ticket",
+            description = "Returns the ticket details if the ticket code is valid")
+    @APIResponse(responseCode = "200", description = "List of vehicles")
+    public GetAllTicketsForVehiclesResponse getTicketsForVihivle(@PathParam("registrationNumber") @NotNull @NotEmpty String registrationNumber){
+        try{
+            return new GetAllTicketsForVehiclesResponse(ticketService.getTicketsForVehicle(registrationNumber), TicketRequestStatus.SUCCESS);
+        } catch (IllegalArgumentException e){
+            return new GetAllTicketsForVehiclesResponse(null, TicketRequestStatus.FAILED);
         }
     }
 }
