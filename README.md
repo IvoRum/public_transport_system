@@ -1,6 +1,16 @@
 # public_transport_system
 
-A lightweight backend system for managing ticketing in a public transport compan
+A lightweight backend system for managing ticketing in a public transport compan.
+
+This project is a `Java`-based web application built using `Maven`, leveraging the Java EE 8 API for enterprise features such as servlets, `JAX-RS`, and transactions. It uses `PostgreSQL` as the database and integrates `OpenAPI` for API documentation via `MicroProfile` and `SmallRye`. The application is packaged as a WAR file and deployed on `WildFly 18`, a robust Java EE application server. For deployment, the WAR is containerized using Docker, allowing easy and consistent deployment across environments.
+
+# Build and run the app
+
+```
+cd public-transport-system
+mvn clean package
+docker-compose build
+```
 
 # Vehicle API Endpoints
 
@@ -202,6 +212,49 @@ Result:
 
 <hr></hr>
 
+# Metrics API
+
+### Health check
+
+URL: `/metrics/health`
+
+Method: `GET`
+
+Checks the health status of the application and its dependencies.
+
+Response: 200 OK — Returns a HealthCheckResponse object containing health status.
+
+<hr></hr>
+
+### Get all Application logs
+
+URL: `/metrics/logs`
+
+MEthod: `GET`
+
+Response:
+200 OK — Returns a list of log entries as plain text.
+If an error occurs, returns an error message.
+
+<hr></hr>
+
+### Get all application metrics
+
+URL: `/metrics`
+
+Method: `GET`
+
+Retrieves aggregated application metrics, including:
+Number of validated tickets
+Total number of tickets
+Number of registered vehicles
+
+Response:
+200 OK — Returns an AllMetricsResponse object with metrics and request status.
+If an error occurs, returns a failed status.
+
+<hr></hr>
+
 # Dev notes
 
 ## Run WildFlt 18
@@ -270,6 +323,26 @@ port `9990` is for wildFly admin acces to configure whe web server.
 Here is the url to the Docker repository:
 https://hub.docker.com/repository/docker/ivorum/wildfly-public-transport/general
 
+## Docker compose build and push to repository
+
+Buidl and prep
+
+```
+docker-compose build
+docker tag public-transport-system ivorum/wildfly-postgre-public-transport:latest
+docker login
+docker push ivorum/wildfly-postgre-public-transport:latest
+
+```
+
+push db
+
+```
+docker tag public-transport-system-postgres-db-1 ivorum/public-transport-system-postgres-db:latest
+docker login
+docker push ivorum/wildfly-postgre-public-transport:latest
+```
+
 ## Posgre set up
 
 For tesp perposes I first run a clean container of posgres and then. after I see that wildfly is connecting properly to the db I`l create a new dicker file and after that I'l create a docker compose file.
@@ -330,6 +403,8 @@ jboss-deployment-structure.xml
 
 ## OpenAPI link
 
+None of them work dont try
+
 http://localhost:8080/public-transport-system-1.0-SNAPSHOT/openapi
 
 http://localhost:8080/public-transport-system-1.0-SNAPSHOT/openapi.json
@@ -357,27 +432,3 @@ final
 http://localhost:8080/public-transport-system-1.0-SNAPSHOT/openapi
 
 http://localhost:8080/public-transport-system-1.0-SNAPSHOT/openapi/ui
-
-# Loging
-
-```java
-@Interceptor
-@TransactionLogged
-public class TransactionLoggingInterceptor {
-    private static final Logger logger = Logger.getLogger("com.example.publictransportsystem.transactionlogger");
-    @AroundInvoke
-    public Object logTransaction(InvocationContext ctx) throws Exception {
-        //logger.info("Transaction START: {}.{}", ctx.getTarget().getClass().getSimpleName(), ctx.getMethod().getName());
-        logger.info("Transaction START: {}.{}");
-        try {
-            Object result = ctx.proceed();
-            //logger.info("Transaction END: {}.{}", ctx.getTarget().getClass().getSimpleName(), ctx.getMethod().getName());
-            logger.info("Transaction END: {}.{}");
-            return result;
-        } catch (Exception e) {
-            //logger.error("Transaction ERROR: {}.{}", ctx.getTarget().getClass().getSimpleName(), ctx.getMethod().getName(), e);
-            logger.severe(String.format("Transaction ERROR: %s.%s", ctx.getTarget().getClass().getSimpleName(), ctx.getMethod().getName()));            throw e;
-        }
-    }
-}
-```
