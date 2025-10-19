@@ -2,6 +2,132 @@
 
 A lightweight backend system for managing ticketing in a public transport compan
 
+# Ticket API Endpoints
+
+### Issue a New Ticket
+
+URL: `/api/ticket`
+
+Method: `POST`
+
+Request Body: JSON object matching IssyTicketRequest
+
+Response: 200 OK with IssyTicketResponse (ticket details and status)
+
+Example:
+
+```json
+{
+  "vehicle_number": "H7872BT",
+  "passenger_name": "Ivan"
+}
+```
+
+Returns:
+
+```json
+{
+  "ticket": {
+    "vehicle": {
+      "type": "BUS",
+      "registrationNumber": "H7872BT",
+      "passengerCapacity": 40
+    },
+    "code": "PT-C8828D03",
+    "passenger": "Ivan",
+    "validated": false,
+    "createdOn": "2025-10-19T07:29:25.744Z",
+    "validatedOn": null
+  },
+  "status": "SUCCESS"
+}
+```
+
+<hr></hr>
+
+### Validate Issued Ticket
+
+URL: `/api/ticket/{ticketId}`
+
+Method: `PATCH`
+
+Path Parameter: ticketId (string, required) — The unique ticket code
+Response: 200 OK with ValidateTicketResponse (ticket details and status)
+
+Example:
+`/api/ticket/PT-C8828D03`
+
+Return:
+
+```Json
+{
+    "ticket": {
+        "vehicle": {
+            "type": "BUS",
+            "registrationNumber": "H7872BT",
+            "passengerCapacity": 40
+        },
+        "code": "PT-C8828D03",
+        "passenger": "Ivan",
+        "validated": true,
+        "createdOn": "2025-10-19T07:29:25.744Z",
+        "validatedOn": "2025-10-19T07:43:51.667Z"
+    },
+    "status": "SUCCESS"
+}
+```
+
+<hr></hr>
+
+### Get All Tickets for a Vehicle
+
+URL: `/api/ticket/{registrationNumber}`
+
+Method: `GET`
+
+Path Parameter: registrationNumber (string, required) — The vehicle registration number
+Response: 200 OK with GetAllTicketsForVehiclesResponse (list of tickets and status)
+
+Example:
+
+`http://localhost:8080/public-transport-system-1.0-SNAPSHOT/api/ticket/H7872BT`
+
+Result:
+
+```Json
+{
+    "tickets": [
+        {
+            "vehicle": {
+                "type": "BUS",
+                "registrationNumber": "H7872BT",
+                "passengerCapacity": 40
+            },
+            "code": "PT-9E8D3810",
+            "passenger": "Ivan",
+            "validated": false,
+            "createdOn": "2025-10-19T07:29:00.982Z",
+            "validatedOn": null
+        },
+        {
+            "vehicle": {
+                "type": "BUS",
+                "registrationNumber": "H7872BT",
+                "passengerCapacity": 40
+            },
+            "code": "PT-F3A9CE1B",
+            "passenger": "Ivan",
+            "validated": false,
+            "createdOn": "2025-10-19T07:29:01.818Z",
+            "validatedOn": null
+        }
+    ],
+    "status": "SUCCESS"
+}
+```
+
+<hr></hr>
+
 # Dev notes
 
 ## Run WildFlt 18
@@ -122,7 +248,7 @@ jboss-deployment-structure.xml
 
 ## Anotaions
 
-@Dependent - Е за когато искаме нова иснтанция за всяко инйектиране
+@Dependent - Е за когато искаме нова иснтанция за всяко инйектиране. Тази анотация е по подразбиране и е с най-къс живот.
 
 @RequestScoped - Е един път за всяко исвикване по HTTP
 
